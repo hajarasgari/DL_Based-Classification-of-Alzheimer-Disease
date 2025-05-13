@@ -1,0 +1,65 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python prepare_data.py
+    deps:
+    - path: prepare_data.py
+      hash: md5
+      md5: c652b48a25d99e0ff2e56b22b950958e
+      size: 6128
+    params:
+      params.yaml:
+        dataset:
+          kaggle_dataset_name: uraninjo/augmented-alzheimer-mri-dataset
+          input_data_subpath: AugmentedAlzheimerDataset
+          output_data_path: data/augmented_alzheimer
+          random_seed: 42
+          test_size: 0.1
+          validation_size: 0.2
+    outs:
+    - path: data
+      hash: md5
+      md5: ecc09d41e093461f652cdf13cabebc3d.dir
+      size: 366157684
+      nfiles: 33985
+  train:
+    cmd: python train_model.py
+    deps:
+    - path: train_model.py
+      hash: md5
+      md5: 7bcc7d987a01e100b37e7039eb956e7f
+      size: 4408
+    params:
+      params.yaml:
+        dataset:
+          kaggle_dataset_name: uraninjo/augmented-alzheimer-mri-dataset
+          input_data_subpath: AugmentedAlzheimerDataset
+          output_data_path: data/augmented_alzheimer
+          random_seed: 42
+          test_size: 0.1
+          validation_size: 0.2
+        model:
+          _target_: models.dummy_model.SimpleCNN
+          learning_rate: 0.001
+        trainer:
+          max_epochs: 1
+          patience: 5
+          batch_size: 32
+    outs:
+    - path: best-checkpoint.ckpt
+      hash: md5
+      md5: c74153d19fca6765a7742eefc17d9ef9
+      size: 100365
+  evaluate:
+    cmd: python evaluate_model.py
+    deps:
+    - path: evaluate_model.py
+      hash: md5
+      md5: b614d911a56c1c26320b4ac8b6f46f00
+      size: 6011
+    outs:
+    - path: evaluation_outputs
+      hash: md5
+      md5: 6c2021169c6235adbf37c861b56894d1.dir
+      size: 75814
+      nfiles: 2

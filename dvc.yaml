@@ -1,0 +1,25 @@
+stages:
+  prepare:
+    cmd: python prepare_data.py
+    deps:
+    - prepare_data.py
+    params:
+    - dataset
+    outs:
+    - data
+  train:
+    cmd: python train_model.py
+    deps:
+    - train_model.py
+    params:
+    - dataset
+    - model
+    - trainer
+    outs:
+    - best-checkpoint.ckpt
+  evaluate:
+    cmd: python evaluate_model.py
+    deps:
+    - evaluate_model.py
+    outs:
+    - evaluation_outputs

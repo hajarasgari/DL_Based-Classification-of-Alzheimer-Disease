@@ -1,2 +1,4 @@
 
 /data
+/best-checkpoint.ckpt
+/evaluation_outputs
