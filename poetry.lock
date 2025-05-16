@@ -226,6 +226,27 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "captum"
+version = "0.8.0"
+description = "Model interpretability for PyTorch"
+category = "main"
+optional = false
+python-versions = ">=3.9"
+
+[package.dependencies]
+matplotlib = "*"
+numpy = "<2.0"
+packaging = "*"
+torch = ">=1.10"
+tqdm = "*"
+
+[package.extras]
+dev = ["flask", "ipython", "ipywidgets", "jupyter", "flask-compress", "pytest", "pytest-cov", "parameterized", "black", "flake8", "sphinx", "sphinx-autodoc-typehints", "sphinxcontrib-katex", "mypy (>=0.760)", "usort (==1.0.2)", "ufmt", "scikit-learn", "annoy"]
+insights = ["flask", "ipython", "ipywidgets", "jupyter", "flask-compress"]
+test = ["pytest", "pytest-cov", "parameterized"]
+tutorials = ["flask", "ipython", "ipywidgets", "jupyter", "flask-compress", "torchtext", "torchvision"]
+
+[[package]]
 name = "catalogue"
 version = "2.0.10"
 description = "Super lightweight function registries for your library"
@@ -380,6 +401,14 @@ all = ["cloudpathlib", "cloudpathlib", "cloudpathlib"]
 azure = ["azure-storage-blob (>=12)", "azure-storage-file-datalake (>=12)"]
 gs = ["google-cloud-storage"]
 s3 = ["boto3 (>=1.34.0)"]
+
+[[package]]
+name = "cloudpickle"
+version = "3.1.1"
+description = "Pickler class to extend the standard pickle.Pickler functionality"
+category = "main"
+optional = false
+python-versions = ">=3.8"
 
 [[package]]
 name = "colorama"
@@ -1174,6 +1203,50 @@ lint = ["pre-commit (==3.7.0)"]
 test = ["pytest (>=7.4)", "pytest-cov (>=4.1)"]
 
 [[package]]
+name = "lightning-utilities"
+version = "0.14.3"
+description = "Lightning toolbox for across the our ecosystem."
+category = "main"
+optional = false
+python-versions = ">=3.9"
+
+[package.dependencies]
+packaging = ">=17.1"
+typing_extensions = "*"
+
+[package.extras]
+typing = ["mypy (>=1.0.0)", "types-setuptools", "fire"]
+cli = ["fire"]
+docs = ["requests (>=2.0.0)"]
+
+[[package]]
+name = "lime"
+version = "0.2.0.1"
+description = "Local Interpretable Model-Agnostic Explanations for machine learning classifiers"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+matplotlib = "*"
+numpy = "*"
+scikit-image = ">=0.12"
+scikit-learn = ">=0.18"
+scipy = "*"
+tqdm = "*"
+
+[package.extras]
+dev = ["pytest", "flake8"]
+
+[[package]]
+name = "llvmlite"
+version = "0.44.0"
+description = "lightweight wrapper around basic LLVM functionality"
+category = "main"
+optional = false
+python-versions = ">=3.10"
+
+[[package]]
 name = "marisa-trie"
 version = "1.2.1"
 description = "Static memory-efficient and fast Trie-like structures for Python."
@@ -1312,6 +1385,18 @@ doc = ["sphinx (>=7.3)", "pydata-sphinx-theme (>=0.15)", "sphinx-gallery (>=0.16
 example = ["osmnx (>=1.9)", "momepy (>=0.7.2)", "contextily (>=1.6)", "seaborn (>=0.13)", "cairocffi (>=1.7)", "igraph (>=0.11)", "scikit-learn (>=1.5)"]
 extra = ["lxml (>=4.6)", "pygraphviz (>=1.14)", "pydot (>=3.0.1)", "sympy (>=1.10)"]
 test = ["pytest (>=7.2)", "pytest-cov (>=4.0)"]
+
+[[package]]
+name = "numba"
+version = "0.61.2"
+description = "compiling Python code using LLVM"
+category = "main"
+optional = false
+python-versions = ">=3.10"
+
+[package.dependencies]
+llvmlite = ">=0.44.0dev0,<0.45"
+numpy = ">=1.24,<2.3"
 
 [[package]]
 name = "numpy"
@@ -1741,6 +1826,33 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
 six = ">=1.5"
 
 [[package]]
+name = "pytorch-lightning"
+version = "2.5.1.post0"
+description = "PyTorch Lightning is the lightweight PyTorch wrapper for ML researchers. Scale your models. Write less boilerplate."
+category = "main"
+optional = false
+python-versions = ">=3.9"
+
+[package.dependencies]
+fsspec = {version = ">=2022.5.0", extras = ["http"]}
+lightning-utilities = ">=0.10.0"
+packaging = ">=20.0"
+PyYAML = ">=5.4"
+torch = ">=2.1.0"
+torchmetrics = ">=0.7.0"
+tqdm = ">=4.57.0"
+typing-extensions = ">=4.4.0"
+
+[package.extras]
+all = ["matplotlib (>3.1)", "omegaconf (>=2.2.3)", "hydra-core (>=1.2.0)", "jsonargparse[signatures] (>=4.27.7)", "rich (>=12.3.0)", "tensorboardX (>=2.2)", "requests (<2.32.0)", "torchvision (>=0.16.0)", "ipython[all] (<8.15.0)", "torchmetrics (>=0.10.0)", "lightning-utilities (>=0.8.0)", "bitsandbytes (>=0.45.2)", "deepspeed (>=0.8.2,<=0.9.3)"]
+deepspeed = ["deepspeed (>=0.8.2,<=0.9.3)"]
+dev = ["matplotlib (>3.1)", "omegaconf (>=2.2.3)", "hydra-core (>=1.2.0)", "jsonargparse[signatures] (>=4.27.7)", "rich (>=12.3.0)", "tensorboardX (>=2.2)", "requests (<2.32.0)", "torchvision (>=0.16.0)", "ipython[all] (<8.15.0)", "torchmetrics (>=0.10.0)", "lightning-utilities (>=0.8.0)", "coverage (==7.3.1)", "pytest (==7.4.0)", "pytest-cov (==4.1.0)", "pytest-timeout (==2.1.0)", "pytest-rerunfailures (==12.0)", "pytest-random-order (==1.1.0)", "cloudpickle (>=1.3)", "scikit-learn (>0.22.1)", "numpy (>=1.17.2)", "onnx (>=1.12.0)", "onnxruntime (>=1.12.0)", "psutil (<5.9.6)", "pandas (>1.0)", "fastapi", "uvicorn", "tensorboard (>=2.9.1)", "bitsandbytes (>=0.45.2)", "deepspeed (>=0.8.2,<=0.9.3)"]
+examples = ["requests (<2.32.0)", "torchvision (>=0.16.0)", "ipython[all] (<8.15.0)", "torchmetrics (>=0.10.0)", "lightning-utilities (>=0.8.0)"]
+extra = ["matplotlib (>3.1)", "omegaconf (>=2.2.3)", "hydra-core (>=1.2.0)", "jsonargparse[signatures] (>=4.27.7)", "rich (>=12.3.0)", "tensorboardX (>=2.2)", "bitsandbytes (>=0.45.2)"]
+strategies = ["deepspeed (>=0.8.2,<=0.9.3)"]
+test = ["coverage (==7.3.1)", "pytest (==7.4.0)", "pytest-cov (==4.1.0)", "pytest-timeout (==2.1.0)", "pytest-rerunfailures (==12.0)", "pytest-random-order (==1.1.0)", "cloudpickle (>=1.3)", "scikit-learn (>0.22.1)", "numpy (>=1.17.2)", "onnx (>=1.12.0)", "onnxruntime (>=1.12.0)", "psutil (<5.9.6)", "pandas (>1.0)", "fastapi", "uvicorn", "tensorboard (>=2.9.1)"]
+
+[[package]]
 name = "pytz"
 version = "2025.2"
 description = "World timezone definitions, modern and historical"
@@ -1961,12 +2073,58 @@ tests = ["aioresponses (>=0.7,<0.8)", "paramiko (>=3.4.0,<4)", "pytest (>=7,<9)"
 dev = ["mypy (==1.15.0)", "scmrepo", "types-certifi", "types-mock", "types-paramiko", "types-tqdm"]
 
 [[package]]
+name = "seaborn"
+version = "0.13.2"
+description = "Statistical data visualization"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+matplotlib = ">=3.4,<3.6.1 || >3.6.1"
+numpy = ">=1.20,<1.24.0 || >1.24.0"
+pandas = ">=1.2"
+
+[package.extras]
+dev = ["pytest", "pytest-cov", "pytest-xdist", "flake8", "mypy", "pandas-stubs", "pre-commit", "flit"]
+docs = ["numpydoc", "nbconvert", "ipykernel", "sphinx (<6.0.0)", "sphinx-copybutton", "sphinx-issues", "sphinx-design", "pyyaml", "pydata_sphinx_theme (==0.10.0rc2)"]
+stats = ["scipy (>=1.7)", "statsmodels (>=0.12)"]
+
+[[package]]
 name = "semver"
 version = "3.0.4"
 description = "Python helper for Semantic Versioning (https://semver.org)"
 category = "main"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "shap"
+version = "0.47.2"
+description = "A unified approach to explain the output of any machine learning model."
+category = "main"
+optional = false
+python-versions = ">=3.9"
+
+[package.dependencies]
+cloudpickle = "*"
+numba = ">=0.54"
+numpy = "*"
+packaging = ">20.9"
+pandas = "*"
+scikit-learn = "*"
+scipy = "*"
+slicer = "0.0.8"
+tqdm = ">=4.27.0"
+typing-extensions = "*"
+
+[package.extras]
+plots = ["matplotlib", "ipython"]
+others = ["lime"]
+docs = ["matplotlib", "ipython", "numpydoc", "sphinx-rtd-theme", "sphinx", "nbsphinx", "sphinx-github-changelog", "myst-parser", "requests", "ipywidgets"]
+test-core = ["pytest", "pytest-mpl", "pytest-cov", "mypy"]
+test = ["pytest", "pytest-mpl", "pytest-cov", "xgboost", "lightgbm", "catboost", "gpboost", "ngboost", "pyspark", "pyod", "transformers (<=4.49.0)", "transformers", "tf-keras", "protobuf (==3.20.3)", "torch (==2.2.0)", "torch", "torchvision", "tensorflow", "sentencepiece", "opencv-python", "numpy (<2.0)", "causalml", "selenium"]
+test-notebooks = ["jupyter", "nbconvert", "nbformat", "nlp", "transformers", "datasets", "keras"]
 
 [[package]]
 name = "shellingham"
@@ -2002,6 +2160,14 @@ description = "Python 2 and 3 compatibility utilities"
 category = "main"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+
+[[package]]
+name = "slicer"
+version = "0.0.8"
+description = "A small package for big slicing."
+category = "main"
+optional = false
+python-versions = ">=3.6"
 
 [[package]]
 name = "smart-open"
@@ -2350,6 +2516,32 @@ optree = ["optree (>=0.13.0)"]
 opt-einsum = ["opt-einsum (>=3.3)"]
 
 [[package]]
+name = "torchmetrics"
+version = "1.7.1"
+description = "PyTorch native Metrics"
+category = "main"
+optional = false
+python-versions = ">=3.9"
+
+[package.dependencies]
+lightning-utilities = ">=0.8.0"
+numpy = ">1.20.0"
+packaging = ">17.1"
+torch = ">=2.0.0"
+
+[package.extras]
+audio = ["gammatone (>=1.0.0)", "pesq (>=0.0.4)", "requests (>=2.19.0)", "torchaudio (>=2.0.1)", "onnxruntime (>=1.12.0)", "pystoi (>=0.4.0)", "librosa (>=0.10.0)"]
+clustering = ["torch_linear_assignment (>=0.0.2)"]
+detection = ["torchvision (>=0.15.1)", "pycocotools (>2.0.0)"]
+image = ["torch-fidelity (<=0.4.0)", "torchvision (>=0.15.1)", "scipy (>1.0.0)"]
+multimodal = ["transformers (>=4.42.3)", "einops (>=0.7.0)", "timm (>=0.9.0)", "piq (<=0.8.0)"]
+text = ["transformers (>4.4.0)", "tqdm (<4.68.0)", "regex (>=2021.9.24)", "mecab-python3 (>=1.0.6)", "ipadic (>=1.0.0)", "sentencepiece (>=0.2.0)", "nltk (>3.8.1)"]
+typing = ["types-setuptools", "types-requests", "types-pyyaml", "mypy (==1.15.0)", "types-tabulate", "torch (==2.6.0)", "types-emoji", "types-six", "types-protobuf"]
+visual = ["matplotlib (>=3.6.0)", "SciencePlots (>=2.0.0)"]
+all = ["gammatone (>=1.0.0)", "pesq (>=0.0.4)", "requests (>=2.19.0)", "torchaudio (>=2.0.1)", "onnxruntime (>=1.12.0)", "pystoi (>=0.4.0)", "librosa (>=0.10.0)", "torch_linear_assignment (>=0.0.2)", "torchvision (>=0.15.1)", "pycocotools (>2.0.0)", "torch-fidelity (<=0.4.0)", "torchvision (>=0.15.1)", "scipy (>1.0.0)", "transformers (>=4.42.3)", "einops (>=0.7.0)", "timm (>=0.9.0)", "piq (<=0.8.0)", "transformers (>4.4.0)", "tqdm (<4.68.0)", "regex (>=2021.9.24)", "mecab-python3 (>=1.0.6)", "ipadic (>=1.0.0)", "sentencepiece (>=0.2.0)", "nltk (>3.8.1)", "types-setuptools", "types-requests", "types-pyyaml", "mypy (==1.15.0)", "types-tabulate", "torch (==2.6.0)", "types-emoji", "types-six", "types-protobuf", "matplotlib (>=3.6.0)", "SciencePlots (>=2.0.0)"]
+dev = ["gammatone (>=1.0.0)", "pesq (>=0.0.4)", "requests (>=2.19.0)", "torchaudio (>=2.0.1)", "onnxruntime (>=1.12.0)", "pystoi (>=0.4.0)", "librosa (>=0.10.0)", "torch_linear_assignment (>=0.0.2)", "torchvision (>=0.15.1)", "pycocotools (>2.0.0)", "torch-fidelity (<=0.4.0)", "torchvision (>=0.15.1)", "scipy (>1.0.0)", "transformers (>=4.42.3)", "einops (>=0.7.0)", "timm (>=0.9.0)", "piq (<=0.8.0)", "transformers (>4.4.0)", "tqdm (<4.68.0)", "regex (>=2021.9.24)", "mecab-python3 (>=1.0.6)", "ipadic (>=1.0.0)", "sentencepiece (>=0.2.0)", "nltk (>3.8.1)", "types-setuptools", "types-requests", "types-pyyaml", "mypy (==1.15.0)", "types-tabulate", "torch (==2.6.0)", "types-emoji", "types-six", "types-protobuf", "matplotlib (>=3.6.0)", "SciencePlots (>=2.0.0)", "fast-bss-eval (>=0.1.0)", "dython (==0.7.9)", "numpy (<2.3.0)", "mecab-ko (>=1.0.0,<1.1.0)", "faster-coco-eval (>=1.6.3)", "bert_score (==0.3.13)", "permetrics (==2.0.0)", "sacrebleu (>=2.3.0)", "netcal (>1.0.0)", "mir-eval (>=0.6)", "scikit-image (>=0.19.0)", "lpips (<=0.1.4)", "mecab-ko-dic (>=1.0.0)", "dists-pytorch (==0.1)", "kornia (>=0.6.7)", "statsmodels (>0.13.5)", "rouge-score (>0.1.0)", "huggingface-hub (<0.31)", "sewar (>=0.4.4)", "jiwer (>=2.3.0)", "pytorch-msssim (==1.0.0)", "pandas (>1.4.0)", "aeon (>=1.0.0)", "fairlearn", "monai (==1.4.0)", "PyTDC (==0.4.1)", "torch_complex (<0.5.0)", "scipy (>1.0.0)"]
+
+[[package]]
 name = "torchvision"
 version = "0.22.0"
 description = "image and video datasets and models for torch deep learning"
@@ -2629,7 +2821,7 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "c83dc8b589435ddfc0939ec1b7949d35287ff7f7c8a74e88350a16467e363ac9"
+content-hash = "3fe46c101f7487adf099a2daa64f23995420660f1c1823c46f048140ace0e38f"
 
 [metadata.files]
 aiohappyeyeballs = []
@@ -2650,6 +2842,7 @@ billiard = []
 blinker = []
 blis = []
 cachetools = []
+captum = []
 catalogue = []
 celery = []
 certifi = []
@@ -2660,6 +2853,7 @@ click-didyoumean = []
 click-plugins = []
 click-repl = []
 cloudpathlib = []
+cloudpickle = []
 colorama = []
 confection = []
 configobj = []
@@ -2708,6 +2902,9 @@ kombu = []
 langcodes = []
 language-data = []
 lazy-loader = []
+lightning-utilities = []
+lime = []
+llvmlite = []
 marisa-trie = []
 markdown-it-py = []
 markupsafe = []
@@ -2718,6 +2915,7 @@ multidict = []
 murmurhash = []
 narwhals = []
 networkx = []
+numba = []
 numpy = []
 nvidia-cublas-cu12 = []
 nvidia-cuda-cupti-cu12 = []
@@ -2756,6 +2954,7 @@ pygments = []
 pygtrie = []
 pyparsing = []
 python-dateutil = []
+pytorch-lightning = []
 pytz = []
 pywin32 = []
 pyyaml = []
@@ -2771,11 +2970,14 @@ scikit-image = []
 scikit-learn = []
 scipy = []
 scmrepo = []
+seaborn = []
 semver = []
+shap = []
 shellingham = []
 shortuuid = []
 shtab = []
 six = []
+slicer = []
 smart-open = []
 smmap = []
 spacy = []
@@ -2795,6 +2997,7 @@ tokenizers = []
 toml = []
 tomlkit = []
 torch = []
+torchmetrics = []
 torchvision = []
 tornado = []
 tqdm = []

@@ -52,3 +52,31 @@ alzheimers_mri_classifier/<br>
 | Streamlit   | Interactive UI                  |
 | DVC         | Data/model versioning           |
 | Poetry      | Dependency management           |
+
+
+## Installation
+
+1- install poetry
+
+2- make a new environment
+
+3- install required packages
+
+4- activate the enviroment
+
+```bash
+poetry shell
+```
+
+
+## To run a DVC pipeline:
+```bash 
+dvc repro
+```
+
+## Run the Streamlit App
+After navigating to the explanations directory, sun the following command:
+
+```bash 
+streamlit run streamlit_webui.py
+```

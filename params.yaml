@@ -1,4 +1,8 @@
 evaluation_results_path: evaluation_outputs
+logger:
+  project_name: mein-projekt
+  run_name: experiment-01
+  eval_run_name: eval-experiment-01
 dataset:
   kaggle_dataset_name: uraninjo/augmented-alzheimer-mri-dataset
   input_data_subpath: AugmentedAlzheimerDataset
@@ -7,9 +11,9 @@ dataset:
   test_size: 0.1
   validation_size: 0.2
 trainer:
-  max_epochs: 10
+  max_epochs: 2
   patience: 5
   batch_size: 32
 model:
-  _target_: models.dummy_model.SimpleCNN
+  _target_: models.resnet18_model.ResNetModel18
   learning_rate: 0.001

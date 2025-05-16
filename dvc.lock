@@ -39,17 +39,17 @@ stages:
           test_size: 0.1
           validation_size: 0.2
         model:
-          _target_: models.dummy_model.SimpleCNN
+          _target_: models.resnet18_model.ResNetModel18
           learning_rate: 0.001
         trainer:
-          max_epochs: 1
+          max_epochs: 2
           patience: 5
           batch_size: 32
     outs:
     - path: best-checkpoint.ckpt
       hash: md5
-      md5: c74153d19fca6765a7742eefc17d9ef9
-      size: 100365
+      md5: e8a79ddc0ad5340c9cbbf5468b3448f9
+      size: 44794507
   evaluate:
     cmd: python evaluate_model.py
     deps:
