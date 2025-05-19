@@ -1,25 +1,31 @@
+import sys
+import types
+
 import streamlit as st
 from PIL import Image
-import types, sys
+
 sys.modules["torch.classes"] = types.ModuleType("torch.classes")
+import importlib
+import os
+import sys
+from pathlib import Path
+
+import numpy as np
 import torch
 import torchvision.transforms as transforms
-import importlib
-import numpy as np
-from pathlib import Path
 from omegaconf import OmegaConf
-import sys
-import os
+
 sys.path.append(os.path.abspath(".."))
-from dataset.classificationdataset import ImageClassificationDataset
-from alibi.explainers import KernelShap
-import matplotlib.pyplot as plt
 import alibi.explainers.shap_wrappers as shap_wrappers
-from sklearn.metrics.pairwise import cosine_similarity
-from captum.attr import IntegratedGradients
+import matplotlib.pyplot as plt
 import numpy as np
+from alibi.explainers import KernelShap
+from captum.attr import IntegratedGradients
 from lime import lime_image
 from skimage.segmentation import mark_boundaries
+from sklearn.metrics.pairwise import cosine_similarity
+
+from dataset.classificationdataset import ImageClassificationDataset
 
 
 class WrappedModel(torch.nn.Module):
@@ -30,27 +36,30 @@ class WrappedModel(torch.nn.Module):
     def forward(self, x):
         return self.model(x)
 
+
 def visualize_image_grayscale(image, explanation, class_name=None):
     fig, ax = plt.subplots()
     ax.imshow(image, alpha=0.8)
-    heatmap = ax.imshow(explanation, cmap='jet', alpha=0.5)
+    heatmap = ax.imshow(explanation, cmap="jet", alpha=0.5)
     fig.colorbar(heatmap, ax=ax)
     title = f"SHAP Explanation" + (f" for class '{class_name}'" if class_name else "")
     ax.set_title(title)
     ax.axis("off")
     return fig
 
+
 def visualize_integrated_gradients(image, attributions, class_name=None):
     attributions = attributions.squeeze().cpu().numpy().transpose(1, 2, 0)
     attributions = np.mean(np.abs(attributions), axis=-1)
     fig, ax = plt.subplots()
     ax.imshow(image, alpha=0.8)
-    heatmap = ax.imshow(attributions, cmap='viridis', alpha=0.5)
+    heatmap = ax.imshow(attributions, cmap="viridis", alpha=0.5)
     fig.colorbar(heatmap, ax=ax)
     title = f"Integrated Gradients" + (f" for class '{class_name}'" if class_name else "")
     ax.set_title(title)
     ax.axis("off")
     return fig
+
 
 def safe_rank_by_importance(shap_values, feature_names=None):
     importances = {}
@@ -71,10 +80,12 @@ def safe_rank_by_importance(shap_values, feature_names=None):
             most_important_names.append(feature_names[idx])
 
         importances[str(class_idx)] = {
-            'ranked_effect': most_important,
-            'names': most_important_names,
+            "ranked_effect": most_important,
+            "names": most_important_names,
         }
     return importances
+
+
 shap_wrappers.rank_by_importance = safe_rank_by_importance
 
 # Load configuration
@@ -89,10 +100,12 @@ if uploaded_file:
     st.image(image, caption="Uploaded Image", use_container_width=True)
 
     # Define transform
-    transform = transforms.Compose([
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-    ])
+    transform = transforms.Compose(
+        [
+            transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+        ]
+    )
     tensor = transform(image).unsqueeze(0)
 
     # Load sample to infer shape & get classes
@@ -107,24 +120,23 @@ if uploaded_file:
     model_class = getattr(module, class_name)
     checkpoint_path = Path("../best-checkpoint.ckpt")
 
-    model = model_class.load_from_checkpoint(
-        checkpoint_path,
-        in_channels=tensor.shape[1],
-        num_classes=len(class_names)
-    )
+    model = model_class.load_from_checkpoint(checkpoint_path, in_channels=tensor.shape[1], num_classes=len(class_names))
     model.eval()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     tensor = tensor.to(device)
 
     # Add embedding extractor method
-    if not hasattr(model, 'get_embedding'):
+    if not hasattr(model, "get_embedding"):
+
         def get_embedding(self, x):
             with torch.no_grad():
                 x = self.features(x)
                 x = torch.flatten(x, 1)
             return x
+
         import types
+
         model.get_embedding = types.MethodType(get_embedding, model)
 
     # Inference
@@ -177,35 +189,35 @@ if uploaded_file:
     st.pyplot(fig_ig)
 
     # ========== LIME Explanation ==========
-    st.subheader("Explanation with LIME")
+    # st.subheader("Explanation with LIME")
 
-    def lime_predict(images):
-        batch = torch.stack([transform(Image.fromarray(img)).to(device) for img in images], dim=0)
-        with torch.no_grad():
-            outputs = model(batch)
-        return torch.nn.functional.softmax(outputs, dim=1).cpu().numpy()
+    # def lime_predict(images):
+    #     batch = torch.stack([transform(Image.fromarray(img)).to(device) for img in images], dim=0)
+    #     with torch.no_grad():
+    #         outputs = model(batch)
+    #     return torch.nn.functional.softmax(outputs, dim=1).cpu().numpy()
 
-    explainer_lime = lime_image.LimeImageExplainer()
-    explanation_lime = explainer_lime.explain_instance(
-        np.array(image.resize((224, 224))),
-        lime_predict,
-        top_labels=1,
-        hide_color=0,
-        num_samples=1000
-    )
+    # explainer_lime = lime_image.LimeImageExplainer()
+    # explanation_lime = explainer_lime.explain_instance(
+    #     np.array(image.resize((224, 224))),
+    #     lime_predict,
+    #     top_labels=1,
+    #     hide_color=0,
+    #     num_samples=1000
+    # )
 
-    temp, mask = explanation_lime.get_image_and_mask(
-        label=pred,
-        positive_only=False,
-        num_features=10,
-        hide_rest=False
-    )
+    # temp, mask = explanation_lime.get_image_and_mask(
+    #     label=pred,
+    #     positive_only=False,
+    #     num_features=10,
+    #     hide_rest=False
+    # )
 
-    fig_lime, ax_lime = plt.subplots()
-    ax_lime.imshow(mark_boundaries(temp / 255.0, mask))
-    ax_lime.set_title(f"LIME Explanation for class '{class_names[pred]}'")
-    ax_lime.axis("off")
-    st.pyplot(fig_lime)
+    # fig_lime, ax_lime = plt.subplots()
+    # ax_lime.imshow(mark_boundaries(temp / 255.0, mask))
+    # ax_lime.set_title(f"LIME Explanation for class '{class_names[pred]}'")
+    # ax_lime.axis("off")
+    # st.pyplot(fig_lime)
 
     # # ========== Similarity Explanation ==========
     # st.subheader("Most Similar MRI Images (Based on Embedding Similarity)")

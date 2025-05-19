@@ -55,28 +55,27 @@ alzheimers_mri_classifier/<br>
 
 
 ## Installation
+- Navigate to the project directory and run:
+```bash
+poetry install
+```
 
-1- install poetry
 
-2- make a new environment
-
-3- install required packages
-
-4- activate the enviroment
+- Activate the enviroment
 
 ```bash
 poetry shell
 ```
 
 
-## To run a DVC pipeline:
-```bash 
+## To run a DVC pipeline (prepare data, train, evaluation):
+```bash
 dvc repro
 ```
 
 ## Run the Streamlit App
 After navigating to the explanations directory, sun the following command:
 
-```bash 
+```bash
 streamlit run streamlit_webui.py
 ```
